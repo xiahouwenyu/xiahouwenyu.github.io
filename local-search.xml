@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="/2021/07/24/hello-world/"/>
+    <url>/2021/07/24/hello-world/</url>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span></code></pre><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="hljs bash">$ hexo server</code></pre><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="hljs bash">$ hexo generate</code></pre><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="hljs bash">$ hexo deploy</code></pre><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>wsl更新到wsl2出现的问题以及解决方式</title>
+    <link href="/2020/06/15/wsl%E6%9B%B4%E6%96%B0%E5%88%B0wsl2%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E5%BC%8F/"/>
+    <url>/2020/06/15/wsl%E6%9B%B4%E6%96%B0%E5%88%B0wsl2%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E5%BC%8F/</url>
+    
+    <content type="html"><![CDATA[<h1 id="wsl更新到wsl2出现的问题以及解决方式"><a href="#wsl更新到wsl2出现的问题以及解决方式" class="headerlink" title="wsl更新到wsl2出现的问题以及解决方式"></a>wsl更新到wsl2出现的问题以及解决方式</h1><p>花了很多时间折腾wsl,从用上wsl那一刻起我就以为我用的是wsl2，因为印象中之前确实做版本转换，过程中并没发现任何异样（其实是因为我水平太低了，在我眼前晃悠我也不一定看得到）。直到docker设置里面连接到wsl2那一栏始终是灰色，我才发现自己一直用的是wsl。在切换wsl版本的过程中我遇到两个主要的问题：</p><h2 id="1-wsl找不到–set-version、wsl-–set-default-version"><a href="#1-wsl找不到–set-version、wsl-–set-default-version" class="headerlink" title="1.wsl找不到–set-version、wsl –set-default-version"></a>1.wsl找不到–set-version、wsl –set-default-version</h2><p>不仅找不到这些，甚至连wsl -l -v都用不了，wsl –help 中不存在这些命令。</p><h3 id="原因解决方式："><a href="#原因解决方式：" class="headerlink" title="原因解决方式："></a>原因解决方式：</h3><p>这是因为windows内部版本太低的问题，当时用的版号是1909，shell中用<code>ver</code>查看的版本号是18363，而wsl需要19***什么的版本，解决办法是去官网暗网下载Windows易更，把windows更新到最新版本。</p><h2 id="2-wsl-–set-version报错"><a href="#2-wsl-–set-version报错" class="headerlink" title="2.wsl –set-version报错"></a>2.wsl –set-version报错</h2><p>最开始显示的报错是什么无法修改、创建某个文件，根本找不到解决办法，还好重启之后报错成了：<code>WslRegisterDistribution failed with error: 0xffffffff</code>，<a href="https://github.com/microsoft/WSL/issues/4364">github</a>上给出了解决方案，原来是其它虚拟机占据了进程，我是因为docker在后台运行。</p><p>解决办法就是：</p><pre><code class="hljs mathematica"><span class="hljs-built_in">Get</span><span class="hljs-operator">-</span><span class="hljs-variable">Process</span> <span class="hljs-operator">-</span><span class="hljs-variable">Id</span> <span class="hljs-punctuation">(</span><span class="hljs-built_in">Get</span><span class="hljs-operator">-</span><span class="hljs-variable">NetUDPEndpoint</span> <span class="hljs-operator">-</span><span class="hljs-variable">LocalPort</span> <span class="hljs-number">53</span><span class="hljs-punctuation">)</span><span class="hljs-operator">.</span><span class="hljs-variable">OwningProcess</span></code></pre><pre><code class="hljs brainfuck"><span class="hljs-comment">NPM(K)</span>    <span class="hljs-comment">PM(M)</span>      <span class="hljs-comment">WS(M)</span>     <span class="hljs-comment">CPU(s)</span>      <span class="hljs-comment">Id</span>  <span class="hljs-comment">SI</span> <span class="hljs-comment">ProcessName</span> --<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span>    --<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span>      --<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span>     --<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span>      --  -- --<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span>     <span class="hljs-comment">18</span>    <span class="hljs-comment">26</span><span class="hljs-string">.</span><span class="hljs-comment">42</span>      <span class="hljs-comment">30</span><span class="hljs-string">.</span><span class="hljs-comment">45</span>       <span class="hljs-comment">5</span><span class="hljs-string">.</span><span class="hljs-comment">31</span>   <span class="hljs-comment">16432</span>   <span class="hljs-comment">0</span> <span class="hljs-comment">dockerd</span>     <span class="hljs-comment">15</span>    <span class="hljs-comment">11</span><span class="hljs-string">.</span><span class="hljs-comment">11</span>      <span class="hljs-comment">16</span><span class="hljs-string">.</span><span class="hljs-comment">40</span>       <span class="hljs-comment">0</span><span class="hljs-string">.</span><span class="hljs-comment">36</span>    <span class="hljs-comment">3972</span>   <span class="hljs-comment">0</span> <span class="hljs-comment">svchost</span></code></pre><p>然后kill掉上面的进程：</p><pre><code class="hljs vhdl">Stop-<span class="hljs-keyword">Process</span> -Id <span class="hljs-number">16432</span> -<span class="hljs-keyword">Force</span>Stop-<span class="hljs-keyword">Process</span> -Id <span class="hljs-number">3972</span> -<span class="hljs-keyword">Force</span></code></pre><p>现在试试应该就没问题了。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>计算机技术</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>wsl</tag>
+      
+      <tag>debug</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>今天是个好日子（第一个人博客与PS5发布会）</title>
+    <link href="/2020/06/12/%E4%BB%8A%E5%A4%A9%E6%98%AF%E4%B8%AA%E5%A5%BD%E6%97%A5%E5%AD%90/"/>
+    <url>/2020/06/12/%E4%BB%8A%E5%A4%A9%E6%98%AF%E4%B8%AA%E5%A5%BD%E6%97%A5%E5%AD%90/</url>
+    
+    <content type="html"><![CDATA[<h1 id="今天是个好日子"><a href="#今天是个好日子" class="headerlink" title="今天是个好日子"></a>今天是个好日子</h1><p>今天终于花了将近一天时间用hexo折腾出了第一个个人博客，此前用django写过一个profile，不好挂文章，现在勉强可以随便写点东西了，也是挺无聊的。PS5也见着了，真是枯燥！总之呢今天还算是美好的一天了。</p><h2 id="个人博客的搭建"><a href="#个人博客的搭建" class="headerlink" title="个人博客的搭建"></a>个人博客的搭建</h2><p>当初之所以会想要搭建个人博客，主要是两个字：<strong>枯燥</strong>。为了让自己来点劲，我想到了用游戏化的方式做一个个人主页，实时记录我的属性、金币、地位、荣誉、幸福度、意识形态等个人状态。比如搭建这个个人博客，我预估一下这个博客挂咸鱼上能卖多少钱，加到金币栏里，当然包括并不限于（发论文、学习新技能、增肌、找媳妇…），以后再拿这部分金币犒劳自己，比如去旅行呀、玩游戏呀，消耗我相应的金币。这样形成一个良性的刺激循环，让人对变强无法自拔，听起来是不是很棒?不过这是很愚蠢的，这可能导致赚钱比花钱更使人上瘾，像很多商人一样一辈子除了赚钱也没干什么别的。所以还要设置任务系统，也就是要发展剧情和目标，这部分还在构思当中。</p><p>当然要实现起来还是很麻烦的，要做到实时记录的话首先要有一个全平台的工具，有办法把我随时的输入收集起来，挂到服务器上，这一点还在思考和探索中。博客我已经基本上建起来了，主要使用的是python+django+mysql和hexo，剩下的内容就交付时间来完善吧。先乱写一气测试一下基本功能。</p><h3 id="django"><a href="#django" class="headerlink" title="django"></a>django</h3><p>django还挺苍白的，因为我也不懂。<br>咳咳，好吧，还是懂一点点。<br>我对任何技术细节都不感冒，所以对于我来说有一堆前端的模板文件（这个网上到处都是，随取随用[]<del>(￣▽￣)</del>*），django就是要把这些模板文件组织起来，并结合数据库，用代码的输出代入模板并发送到目标服务器。这当然是对django的误解啦，django的功能还是挺强大的，不过还是头发要紧…<br>抱着站在巨人的肩膀上做事的态度，我当然不会连写前端这种事情都要亲力亲为，但又要满足高度的自定义化的需求，怎么搞？我猜一定有可视化生成HTML的傻瓜工具，果然一找一大堆，什么画图交给人工智能识别的（<a href="https://github.com/ashnkumar/sketch-code">sketch</a>），什么PPT转HTML的，还有手动拖拽的Bootstrap在线设计工具，全都用上，折腾了几天建起一个，用起来不是很方便，但优势是自定义程度非常高。以后有时间再慢慢完善吧。  </p><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ul><li>自定义化程度高</li><li>对外行来说是一个了解前端工程师，后端工程师以及全栈工程师大概在干些什么的窗口</li></ul><h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><ul><li>吃时间</li><li>脱发（对外行来说）</li></ul><hr><h3 id="hexo"><a href="#hexo" class="headerlink" title="hexo"></a>hexo</h3><p>这是一种完全的傻瓜式建站的工具（当然最好还是会一点mac os或者linux的shell操作），一样的有<a href="http://typecho.org/">tyepcho</a>、<a href="https://gohugo.io/">hugo</a>，当然还有大名鼎鼎的<a href="https://zh-cn.wordpress.com/">wordpress</a>。他们之间主要区别在于实现的语言以及动静态之分。<br>我的理解是动态网页是根据实际情况不断变化的网页，用户的操作，时间的变化等等因素都会让网页的构成在本质上发生变化（就是说不是有个动画效果就叫动态的），静态网页就是预先设定好的，交互性不强，但速度快。Hexo就属于静态网页。<br>搭建hexo的过程非常简单:</p><pre><code class="hljs mipsasm">npm <span class="hljs-keyword">install </span>hexo-cli -g <span class="hljs-comment">#安装</span>hexo init <span class="hljs-keyword">blog </span><span class="hljs-comment">#初始化目标文件夹</span>cd <span class="hljs-keyword">blog</span><span class="hljs-keyword"></span>npm <span class="hljs-keyword">install </span>hexo server <span class="hljs-comment">#启动本地服务器</span></code></pre><p>这样hexo自带的模板就启用了，接下来写第一篇博客：</p><pre><code class="hljs axapta">hexo clean <span class="hljs-meta">#清空网页文件</span>hexo <span class="hljs-keyword">new</span> post 文章名称hexo generate <span class="hljs-meta">#生成网页文件</span>hexo <span class="hljs-keyword">server</span> <span class="hljs-meta">#启动本地服务器</span>hexo d <span class="hljs-meta">#挂载到服务器</span></code></pre><p>再研究研究网站模板一般也没什么问题了。</p><h4 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h4><ul><li>快速（两个方面，搭建和访问）</li><li>美观（有设计感的模板，让你自愧不如）</li><li>支持<em>markdown</em></li></ul><h4 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h4><ul><li>不自由</li><li>文章只能在后台写好挂上去，不能在网站上使用编辑器</li></ul><h2 id="PS5的发售"><a href="#PS5的发售" class="headerlink" title="PS5的发售"></a>PS5的发售</h2><p>好的，正文开始。</p><h3 id="发布时："><a href="#发布时：" class="headerlink" title="发布时："></a>发布时：</h3><div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="/img/blog1/a277984fa5c41f3.png"></div><div class="group-image-wrap"><img src="/img/blog1/ps5.jpg"></div></div><div class="group-image-row"><div class="group-image-wrap"><img src="/img/blog1/62434a71d4dbc652.jpg"></div><div class="group-image-wrap"><img src="/img/blog1/49038bd76cbc3ed5.jpg"></div><div class="group-image-wrap"><img src="/img/blog1/-632627e15a58de76.png"></div></div></div><h3 id="发布后："><a href="#发布后：" class="headerlink" title="发布后："></a>发布后：</h3><h4 id="《ps5：成为建筑》"><a href="#《ps5：成为建筑》" class="headerlink" title="《ps5：成为建筑》"></a>《ps5：成为建筑》</h4><p><img src="/img/blog1/-3a4579bd2044f18a.jpg"><br><img src="/img/blog1/-104c4b4b66a4ede1.jpg"></p><h4 id="《ps5-成为家电》"><a href="#《ps5-成为家电》" class="headerlink" title="《ps5: 成为家电》"></a>《ps5: 成为家电》</h4><p><img src="/img/blog1/-1397bac3e9d5776d.jpg"><br><img src="/img/blog1/7fa018845b3b407a.jpg"><br><img src="/img/blog1/-30e88864737d73c2.jpg"><br><img src="/img/blog1/-29e30387a80f5d14.jpg"><br><img src="/img/blog1/-5923be777565fbaa.jpg"></p><h4 id="《ps5-成为人类》"><a href="#《ps5-成为人类》" class="headerlink" title="《ps5: 成为人类》"></a>《ps5: 成为人类》</h4><p><img src="/img/blog1/-51bc01295718b08d.jpg"><br><img src="/img/blog1/-ba8acff820214ac.jpg"><br><img src="/img/blog1/6dd86bc98413f9e4.jpg"><br><img src="/img/blog1/100a6677be60e2c6.jpg"><br><img src="/img/blog1/-2549cf09b94938ae.jpg"><br><img src="/img/blog1/5276fedd04efb39d.jpg"><br><img src="/img/blog1/5f0566b6f19d5ee1.jpg"><br><img src="/img/blog1/-22118611c2caba9e.jpg"></p><h4 id="以及"><a href="#以及" class="headerlink" title="以及"></a>以及</h4><p><img src="/img/blog1/-2fcab3a085eb5db3.jpg"><br><img src="/img/blog1/4ee28d28052770f6.jpg"><br><img src="/img/blog1/5cd5e88b3a46a8f3.jpg"><br><img src="/img/blog1/460e91f99601b0d8.jpg"><br><img src="/img/blog1/-18cf554d112ac106.jpg"><br><img src="/img/blog1/-15021fa02a8461f4.jpg"><br><img src="/img/blog1/6e6409a6fabe406b.jpg"></p><p>可谓承包今日笑点。</p><h2 id="其它测试内容"><a href="#其它测试内容" class="headerlink" title="其它测试内容"></a>其它测试内容</h2><h3 id="脚注"><a href="#脚注" class="headerlink" title="脚注"></a>脚注</h3><p>我是谁<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="沈话费？">[1]</span></a></sup>？</p><h3 id="便签"><a href="#便签" class="headerlink" title="便签"></a>便签</h3><div class="note note-primary">            <p>primary </p>          </div><div class="note note-secondary">            <p>secondary </p>          </div><div class="note note-success">            <p>success </p>          </div><div class="note note-danger">            <p>danger </p>          </div><div class="note note-warning">            <p>warning </p>          </div><div class="note note-info">            <p>info </p>          </div><div class="note note-light">            <p>light </p>          </div><h3 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h3><span class="label label-primary">哈哈</span><h3 id="勾选框"><a href="#勾选框" class="headerlink" title="勾选框"></a>勾选框</h3><div>            <input type="checkbox" disabled >love          </div><div>            <input type="checkbox" disabled >don't love          </div><div>            <input type="checkbox" disabled >love          </div><div>            <input type="checkbox" disabled >don't love          </div><h3 id="按钮"><a href="#按钮" class="headerlink" title="按钮"></a>按钮</h3><a class="btn" href="https://www.google.com/search?q=ai&oq=ai&aqs=chrome..69i57j69i61j69i65j69i59j69i60l2j0.1891j0j7&sourceid=chrome&ie=UTF-8"  title="ai" target="_blank">love</a><h3 id="LATEX"><a href="#LATEX" class="headerlink" title="LATEX"></a>LATEX</h3><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script><p>$$\sum_{k=1}^{n}\frac{1}{k_1^2}$$</p><p>$$\sum_{k=1}^n\frac{1}{\sqrt{k}}$$</p><p>$$\int_a^b f(x)dx$$</p><p>$$\begin{bmatrix}1 &amp; 2\\3 &amp;4\end{bmatrix}$$</p><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span>沈话费？<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>]]></content>
+    
+    
+    <categories>
+      
+      <category>日记</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>blog</tag>
+      
+      <tag>网站开发</tag>
+      
+      <tag>游戏</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  
+</search>
