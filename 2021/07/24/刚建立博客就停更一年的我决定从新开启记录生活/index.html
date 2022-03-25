@@ -17,7 +17,7 @@
   <meta name="description" content="天体物理/天文物理学徒的脱发史与精神病发病指南">
   <meta name="author" content="Shen huafei">
   <meta name="keywords" content="天文 物理 游戏 音乐 艺术 历史 心理学 计算机">
-  <title>wsl更新到wsl2出现的问题以及解决方式 - Shen huafei</title>
+  <title>刚建立博客就停更一年的我决定从新开启记录生活 - Shen huafei</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -152,8 +152,8 @@
               
   <div class="mt-3 post-meta">
     <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2020-06-15 10:10">
-      2020年6月15日 上午
+    <time datetime="2021-07-24 21:50">
+      2021年7月24日 晚上
     </time>
   </div>
 
@@ -163,7 +163,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      406 字
+      9 字
     </span>
   
 
@@ -173,7 +173,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      4
+      1
        分钟
     </span>
   
@@ -204,43 +204,30 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <h1 id="wsl更新到wsl2出现的问题以及解决方式"><a href="#wsl更新到wsl2出现的问题以及解决方式" class="headerlink" title="wsl更新到wsl2出现的问题以及解决方式"></a>wsl更新到wsl2出现的问题以及解决方式</h1><p>花了很多时间折腾wsl,从用上wsl那一刻起我就以为我用的是wsl2，因为印象中之前确实做版本转换，过程中并没发现任何异样（其实是因为我水平太低了，在我眼前晃悠我也不一定看得到）。直到docker设置里面连接到wsl2那一栏始终是灰色，我才发现自己一直用的是wsl。在切换wsl版本的过程中我遇到两个主要的问题：</p>
-<h2 id="1-wsl找不到–set-version、wsl-–set-default-version"><a href="#1-wsl找不到–set-version、wsl-–set-default-version" class="headerlink" title="1.wsl找不到–set-version、wsl –set-default-version"></a>1.wsl找不到–set-version、wsl –set-default-version</h2><p>不仅找不到这些，甚至连wsl -l -v都用不了，wsl –help 中不存在这些命令。</p>
-<h3 id="原因解决方式："><a href="#原因解决方式：" class="headerlink" title="原因解决方式："></a>原因解决方式：</h3><p>这是因为windows内部版本太低的问题，当时用的版号是1909，shell中用<code>ver</code>查看的版本号是18363，而wsl需要19***什么的版本，解决办法是去官网暗网下载Windows易更，把windows更新到最新版本。</p>
-<h2 id="2-wsl-–set-version报错"><a href="#2-wsl-–set-version报错" class="headerlink" title="2.wsl –set-version报错"></a>2.wsl –set-version报错</h2><p>最开始显示的报错是什么无法修改、创建某个文件，根本找不到解决办法，还好重启之后报错成了：<code>WslRegisterDistribution failed with error: 0xffffffff</code>，<a target="_blank" rel="noopener" href="https://github.com/microsoft/WSL/issues/4364">github</a>上给出了解决方案，原来是其它虚拟机占据了进程，我是因为docker在后台运行。</p>
-<p>解决办法就是：</p>
-<pre><code class="hljs mathematica"><span class="hljs-built_in">Get</span><span class="hljs-operator">-</span><span class="hljs-variable">Process</span> <span class="hljs-operator">-</span><span class="hljs-variable">Id</span> <span class="hljs-punctuation">(</span><span class="hljs-built_in">Get</span><span class="hljs-operator">-</span><span class="hljs-variable">NetUDPEndpoint</span> <span class="hljs-operator">-</span><span class="hljs-variable">LocalPort</span> <span class="hljs-number">53</span><span class="hljs-punctuation">)</span><span class="hljs-operator">.</span><span class="hljs-variable">OwningProcess</span></code></pre>
-
-<pre><code class="hljs brainfuck"><span class="hljs-comment">NPM(K)</span>    <span class="hljs-comment">PM(M)</span>      <span class="hljs-comment">WS(M)</span>     <span class="hljs-comment">CPU(s)</span>      <span class="hljs-comment">Id</span>  <span class="hljs-comment">SI</span> <span class="hljs-comment">ProcessName</span>
- --<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span>    --<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span>      --<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span>     --<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span>      --  -- --<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span>
-     <span class="hljs-comment">18</span>    <span class="hljs-comment">26</span><span class="hljs-string">.</span><span class="hljs-comment">42</span>      <span class="hljs-comment">30</span><span class="hljs-string">.</span><span class="hljs-comment">45</span>       <span class="hljs-comment">5</span><span class="hljs-string">.</span><span class="hljs-comment">31</span>   <span class="hljs-comment">16432</span>   <span class="hljs-comment">0</span> <span class="hljs-comment">dockerd</span>
-     <span class="hljs-comment">15</span>    <span class="hljs-comment">11</span><span class="hljs-string">.</span><span class="hljs-comment">11</span>      <span class="hljs-comment">16</span><span class="hljs-string">.</span><span class="hljs-comment">40</span>       <span class="hljs-comment">0</span><span class="hljs-string">.</span><span class="hljs-comment">36</span>    <span class="hljs-comment">3972</span>   <span class="hljs-comment">0</span> <span class="hljs-comment">svchost</span></code></pre>
-
-<p>然后kill掉上面的进程：</p>
-<pre><code class="hljs vhdl">Stop-<span class="hljs-keyword">Process</span> -Id <span class="hljs-number">16432</span> -<span class="hljs-keyword">Force</span>
-Stop-<span class="hljs-keyword">Process</span> -Id <span class="hljs-number">3972</span> -<span class="hljs-keyword">Force</span></code></pre>
-
-<p>现在试试应该就没问题了。</p>
-
+              <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="抱歉，这个密码看着不太对，请再试试。" data-whm="抱歉，这个文章不能被纠正，不过您还是能看看解密后的内容。">
+  <script id="hbeData" type="hbeData" data-hmacdigest="619808ec7a986273f18fb0e9693dc055df6883d0e50a8b7fd26c24c67afd8abe">7a943962c1793f1d8736143c662d782fe2aef770d86df170a63fb2bb6a89237003bac7886a8ff25c728d3b51d3e770f6ddc23901d6e4b11826a772ebb3489870e972c9455b2d3e903ed0194311e4d01e4854e32f947329e5a33d3e3685d2cde28ca96a68e2a756107ddcb83345c959685aec4811f8523cc913d95bce5b4b0b59d7f89fa1601d4ae44040e48ded3f18369fc0f11ec3e07bec87d61b0e18ba9b0fc582fd3c1a187978bd65ba64ef2dccdef09b936a86c3d39c65d61570fb844524a58d79f338d9373a143e22202337741947e5487f235783a809f6bc072794da3b2464b4ab6a2c34597ce576d6c4c2bd1ea3a16e1d3e5c54e89a43bfe3368c457057b10634d200fb0f823085f64b5e530be0c0b4e5c51ee0e03ba5a4498c9b971445d46e2d85844d49462843d914cd22968135673a57573a2117c2651c78b00500c95f6800106e093f1166b6f916cb2007b78c044dbdbf05f957bd5cd1856ff57adfe3775934170dbb07bdd229123ae2a04cda4e77fdeda2af5ab0234146fba645f2c9a02ab73232cfa7e07f8a6210afc8302af54fb6b8875ea1f885e7ea6e64349bb1b71db05d2dba7f9b9976ba47f524e91f7f72aea6c1b99c96a1c8a5266a425a529caa84c78dce48652bfe9641655b17c9f39556ccd610efe42e94fac74597aa4fad700147d976ed5292c5f2dc319681dfe19dafe24adb5796a55dd4a79f3fd4411dbb62691e1e7b74370c428e4f77097393837b582331068dc525a316c6cfb7bdbf205de676becbf0806a269ff4139239be08671095d1fcb37908119377646308166cb4ba4a2975a115ef7d5341a12c5a3c484852bf5374b21192888cf663c26197ed2065712956f191c33aef135f2d4aea7dcd1ac41f71d5204eb800668b90e72969558e68d0760563e9b9f8553690c4f6a3c5e46abc7c7aa97d5b1422b6a13ea33ef0a3f593d54d28306ed5a0b08d1b2bd594ca618b8a0981beebb4bc1595a0dfe3cc87a5752da04ef20eeb760ca2cc6ce1e702812185ee19ec262f6ec33cc92911f811be8e32ad6d8c1d3d83ab560ed0f408c1b57ec75377ce0f5bfd6f8b37e3d76ab2314fdea87f0ed1fd11fde2d7a6980fcb4c3bda18295c9eb4701750616508486bd4db08a5e9401952cff3969732ba55fe4289aa662a935967c03567ac9ea337528f1874291dbe9576f295ed35a9271cbb013353073aaa00cf162075ab7d949df8b687d2459f2eeb13a79f61ec46a93a61e74d87fb817eaf35e4162ea9be261d4cb72477aea4abc7210b8e4a9c9aa4c1e1c231e056c7cadbaee271a3f53cfd076b8467820da5385b3c27a65629af6a03e5dddfcbb9fef555e7ed123aeabbc3a010c31da11fad0b8b226b58defa944bc5a0c9d06d26553e555624ddf5f99562dd20dd257559f5217816458e0564c3f4c9cc2467fe59ef75d23b29569137cef376f836355e0f4f7947ce8ae64e952e581f7af12532b42967e6691a1309ddba0cfcf116e01f786890370a53293651ce124d79e71a7f46506eb175f5039ba375ce7e775d78c11e1792b0af7e5b84b8c26713c0aa56deb22b3e31b5e4fac2911a6480788607b46cbbe277ec6258416de2a839148cc5bd46a6435e0f563f4b4e6d70920f97600ba0975be89520f915f99f8103a0c9e4c14c16cc5bb920583cb9c7dde67a8c74a3e6b9e4a6c9241d7f81e29dbd38970a6c1c390dba467fce2a523b274258dee047831c9920d5b04c7de9e87e577471c03d017ce303a3ce9c14300135dcef57e31ffb199d341f937bb6aee6d4bd6afc97b32dc025934d10d50cc980e0ec15e5ab90044ae5628b0d9b8def3ae969beb21b06d9706fe529f780769d5cadb6bbbbeb3f0a37b056e316ec096ab55d95c9aab87b3f7e7cd78ee5ce12182b685553e5d4bb6592656f81c308bf1648f53ed72811dd729c41cc877583906054dafda9cb45334d725350d840d5c228c416604111271799f9568315c7dab2df828ef49d7be888baf2a2835adde44e4258801e7a988fb5c26a3af900739fc1a133c02325ddca7def5b01742977d9c98656bb0067fcba6e3eab42d254b6a81606178bb2c1bf019fa49dd5d96d7a9b42f862f368eea1eaa4913c8e4eda6677c03db39ac746665b79888ab3c51d6a917000296a865e0a16cd9af94570ca22be9d2969967735b2082b6fb0ec939e0952bcf5711049c8be0a969bc9234ca2a3498bb574d1aa0cc6a3f7c5a8caa2209b5815ceb372577b9ffb46fec34463a6c34da0815bc1f28a387b7e748e522e6b3218e5f7e0bfb543b6aaa5ab5593de0746a162962b82477f9cedb73a3f8f6b885d1f7e82b422faa54c41ec90e3d043f13d638ba83064a774764d165b9777a57c27648694732e3d19d0ae95dbf76f18c72fbd295d2666b50ab422d6aaaffd25927a2a2f3b900fd94b6ac9e2c144c1e6e4aca590b61f977c1d6946c79ca83a460f521645ee73686cd6b69d185b6f24520251cd8fadf8bcdadabad4a2ed2751f37b94e8d45d0b8a0c0a4b7a81d6f5497865e54b50599609095494ad643012102061315b0abd0aaa582eb8734cde3fe20484b5e1a0d89ee97e68a48cb1026a8490de2a6fb013de5e71bda721d3fbd10f15b8b47f2a4a1c2b6b923afdc2774e03d9f2644d358762307fa4aa2306e9697b3deaf352cd0f0b3fb979dafd25a9d0ab6cd8ed1251a844faede3f541085ccd7cb92633190fa1c6a10cdc1b64aeb68de8f1b8325d860c4f373c81991365766be677391d4f85085cf66b50a28de620eba939e89a4cc696fc6d14fd943d440f3826f8db07e408a3ea9615caa65a229d9516f8fe644f68ec24422089dace89c47a9cdece08e1b9b20cade7c4691d986a6f0cf715c5b83b1a5788d4e9b7369f8b6025abf1ab1673843bf7841c42945b2c0d8b0c8ec8fff9d7d87a2ba09fa5ff134faac84c5405eb74469486b17f6de36105e0f13d9c586bdd72f4b38caace30affd677dd24b9fe014d493e85f4518336b4367b047b03126470225582cd1fe3a3b5f3093441bf00a760785faec0284ead1e472f9c66b64c2cff209294a14e9ebc56d616bb9275e470c6405c0628e8b3ec672ba3e8cefb6e84052fe4fa16cbb9e935b8339a7e62d04cad0374f0e9c56a279cf6c40487d6131e012a37fbc7be17cf8c533786b41152622ea65565187ecbf7773cb17e399a468dcf946306fef30bd34981b174fc72db8b8d3396feceed9492561bb303595d2c91451a9da6f0c2abf22dc028ca8901e724142442c3ae492ff92ac1cd59227bdcd6cdb4d86d805725629d091bbef077dbd96a233f5f67998f5202df07a4c5c35eb5f7dd579e9dab2fca749b8a3377eafaba64992d9846c0bc5c9664f5a02ad49a045c9228520d17a80ba34b25c7da4e99b7a41bed33e5ba7e8530c1541a72e8265a46533b48fca954fdbef1ca9a1ec6f67a8aa81e63dc4ba00e1806595db3bf04c4aa959d686767c5dc23f847724d0e9c8f6277075e3614de8aab6878ea1e4cf082f8b0e5829e137f1aad187650088b2b1a25bf5b6730d79782c9a171e998363a0b56568b873b94271aa6a56a182af595d8b1edd4d2bbfd492f55d5433759f63be9ca14e9a29904afca5c1a1846cc44565e042dc21428a961bc888ea9d3f8d1ca4c1100bff76a9ac4f15ff8991ac2f0b851ee61adb4cd1640713635da2405def4ba1a7dab727a17f03cd4bacf772ac3781f77105247f33f2643d1315847db3f2d930fa9389c6959ece89bf102f183d16564f6a5ab7c4523a0dd0b8ed2338e072ca9259cf8c3b01db69d70623495d20f83a92a4ba379f6aadead2446caa109963da269abf61c3d204a52ebf49355eadc8268da209114fa216cf352e8830de15c6aedeffda6f130a03dabff0e856767b369fedc27171002a60eaec80a67617bb614eaf0a75a5d1c06060f4a934a5da451f9a93b19d33802cee0f04e7f69c63cdafc2f5177b230d52c39c22aa2e3336d8a2c9ee818fc771c60c63dd96f6ee092e7173d0b249ef3f730055b87b3dc7ef5828dd493c5302e90bb5583041bc2a406f236f5823166f601b150d22c1044b2614968844875e6bc841a25077f4da5ad15b057179a864206856d6dbcb4ff3486bb233ed9492bbc7f7f3b10c68a59b5b7378c324908e47a7093bb8e8dc618c10ea6bd4af2998d0a07b90a106e918fcf0933b9f774d8e4789ac6221c5ec94203dcfe647d0f1d151f091d21a9403a0b3125515ba4d249c67b1a17f8bf99bf2748b5393404bb4224e0a0a653befef7c998408b95f08c07a2496d165a04ceedbef3ef88db28833aeccfb5e01e9d4683948880fe0212d4a333f2bcdf56169b41dbf779dc4e31796403dbf1872a3595b4f3ee5b00bf1fc578c341c37a99f795d166d3b86bdee1e4dd84af510d27b126692f60716cc62d52af74fdd14b011550a4fb74fbe45f0219c26985665b8575612f6c376d3fda3d9ef98c23025efef24431da65bcd3a44529821c838eaa357fd2838b515ce71fc11885e8899d9e3b4787766c9c4598a5895fbdd73db9c073110c3601f9a2d78b6dc73a6bc829b93e03020a2b522f98b83fe84a7d17ca986d7dd3249d81ee0348a882e7f72ca4b8da53bb24732270b822f197f221fd30ef55f2fe63374440efc32a330ff94f2b2d2306389e3897c919c8be0d6bcd970ef1e31bb34f52b4433cc0a06dc52e529f69a28f4b6c321d0e3d6640fd22a7dc5af7afe1a2357c4bea613e6009d9566a22a09572b6817878b5cad51362d5457a3b55728be0a57b7056b81b9373f644f3c414df03c3d8831f5b60ac3f242aefe6c7562ccf2280b117dd1ddd1d09d8390bfa76dcee4a167727cea614b5f1a8de2b54d59c097d7e249fa5561f3888f3e0074bede65011bf8a446113e597c1ca9b025be02b035d0b1325f89d2c451fde44ee0b142aef0e78133e6a6aa8b55443da1da4dc62bf4e8e3fe2bb259d218afdcccdd7e4e4de5f0b028ea1413a31858287a466fd08aa96bfa0fae9a5094b7fdb723a1cf847608b86cdfd9ad8db63dfe81c2dbe889438e26242e273a6b2d90152f024d9aaf366cf6bbc7949fe1c1b33c9a31fab85f0969826a989c4019ae954d4cc2c2da4ce42453fe48923c40ca920f688ce327121d3c636b04b127b581ee2d94979b00df921cd90cf21535922b8f258cc779510e45f135c00713a06bd4125c919a8b61362ce6ba3e647ae2a9b9ef8e15925bf1bf4e0064ec95238084647d0cebcecbfe2ed32caa53ca413462991e719586a97c5da88e9735f0a4c7eb97e549ce360b14bd7d7e93dff0bb98740c8cedbafa85a239d973d4b6a984109de5d0d335836ea2abb80454cc47b2be98556fb36aa2b91845fcfd83841799451a2b6790bde45972307c1d6b10edfceaf756520264ca527292d2330d2ae4654196f44bcc55b229bddba5f714c67a63cadb4660a7dd43dc588d799074c0a7d6348f64d705a97a8c76045a99fe99067b4a3c4c627fe1aa173bbfc3b51eb0e8c272b5132d77fa7afe3c1c841d43f0edacd32812e7c2ead05ed9c91105223b8aaf68c30e5c1e58c3816d7aea6d4647c0f3c0473abf1453acb5efd24264f5acd96cae0cdca159b4f29afe1ad511ddb30339a7f5f3d74009df4333150f3c7d0032adc4eb4ffb74aad9349a55c87e8b4523713747421c32a029e83c43ce0cbee73fbea9fd2e9b4d9d415f6717b905cadb51fcebb187653266ae696cc13406f0059c5db70836be2dc781928a05bfc849caae1951f7ccf7c708a85d197a2c24c91ead17c9841429c98fab92d74d95ae7579ae825de329829db7bdd3408583952638778d5a7981f7ace4b084206dd9c0b73ec7edbe4724</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">您好，这里需要密码。</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
             </article>
             <hr>
             <div>
               <div class="post-metas mb-3">
                 
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%8A%80%E6%9C%AF/">计算机技术</a>
-                    
-                  </div>
-                
                 
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/wsl/">wsl</a>
+                      <a class="hover-with-bg" href="/tags/%E6%83%B3%E6%B3%95/">想法</a>
                     
-                      <a class="hover-with-bg" href="/tags/debug/">debug</a>
+                      <a class="hover-with-bg" href="/tags/%E6%97%A5%E8%AE%B0/">日记</a>
                     
                   </div>
                 
@@ -253,18 +240,12 @@ Stop-<span class="hljs-keyword">Process</span> -Id <span class="hljs-number">397
                   <div class="post-prev col-6">
                     
                     
-                      <a href="/2021/07/24/hello-world/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Hello World</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </div>
                   <div class="post-next col-6">
                     
                     
-                      <a href="/2020/06/12/%E4%BB%8A%E5%A4%A9%E6%98%AF%E4%B8%AA%E5%A5%BD%E6%97%A5%E5%AD%90/">
-                        <span class="hidden-mobile">今天是个好日子（第一个人博客与PS5发布会）</span>
+                      <a href="/2021/07/24/hello-world/">
+                        <span class="hidden-mobile">Hello World</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -446,7 +427,7 @@ Stop-<span class="hljs-keyword">Process</span> -Id <span class="hljs-number">397
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "wsl更新到wsl2出现的问题以及解决方式&nbsp;",
+        "刚建立博客就停更一年的我决定从新开启记录生活&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
